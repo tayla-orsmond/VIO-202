@@ -25,7 +25,8 @@
             <iframe  class="lazyload" style="border: none" width="1100" height="300" src="https://rive.app/s/aNuFIXOE0E6rvLlEhpCfww/embed" allowfullscreen></iframe>
         </div>
         <div class="container teaser lazyload">
-            <iframe id="panel2-1" class="lazyload"  style="border: none" width="1100" height="300" src="https://rive.app/s/FWwiSB4TpECkFQWJfYW_Iw/embed" allowfullscreen></iframe>
+            <canvas class="lazyload" id="panel2-1" width="1100" height="300"></canvas>
+           <!-- <div id="panel2-1"><iframe class="lazyload" style="border: none" width="1100" height="300" src="https://rive.app/s/FWwiSB4TpECkFQWJfYW_Iw/embed" allowfullscreen></iframe></div>  -->
         </div>
         <div class="container teaser lazyload">
             <iframe id="panel2-2" class="lazyload" style="border: none" width="1100" height="1195" src="https://rive.app/s/gkh7splzQ0K-KXMRhJAfig/embed" allowfullscreen></iframe>
@@ -48,7 +49,8 @@
         const hover1 = document.getElementById('hover1');
         const hover2 = document.getElementById('hover2');
         const hover3 = document.getElementById('hover3');
-        const panel21 = document.getElementById('panel2-1');
+        //const panel21 = document.getElementById('panel2-1');
+        const panel22 = document.getElementById('panel2-2');
         const panel3 = document.getElementById('panel3');
 
         //SOUND
@@ -67,59 +69,71 @@
                 this.sound.pause();
             }
         }
-        function sound2(src) {
-            this.sound2 = document.createElement("audio");
-            this.sound2.src = src;
-            this.sound2.style.display = "none";
-            this.sound2.setAttribute("preload", "auto");
-            this.sound2.setAttribute("controls", "none");
-            document.body.appendChild(this.sound2);
-            this.play = function(){
-                this.sound2.play();
-            }
-            this.stop = function(){
-                this.sound2.pause();
-            }
-        }
-        dialogue1 = new sound("audios/cmonkeepup.m4a");
-        
+        //c'mon keep up
+        dialogue1 = new sound("audios/cmonkeepup.wav");
         hover1.addEventListener("mouseover", function(){
             dialogue1.play();
         });
-        // //canvases
-        // const panel11 = document.getElementById('panel11');
-        // const panel14 = document.getElementById('panel14');
+        //jump for me
+        toplay = true;
+        dialogue2 = new sound("audios/jumpforme.wav");
+        hover2.addEventListener("mouseover", function(){
+            if(toplay){//only play once
+                dialogue2.play(); 
+                toplay = false;
+            }
+        });
 
-        // //layout rive canvases
-        // var layout = new rive.Layout({
-        //     fit: rive.Fit.Contain,
-        //     alignment: rive.Alignment.Center,
-        // });
-        // /*
+        //siren
+        siren = new sound("audios/siren.wav");
+        panel22.addEventListener("mousemove", function(){
+            siren.play();
+        });
+        panel3.addEventListener("mousemove", function(){
+            siren.play();
+        });
+        //crash
+        crash = new sound("audios/crash_mix.mp3");
+        hover3.addEventListener("mouseover", function(){
+            crash.play()
+        });
+        //canvases
+        const panel21 = document.getElementById('panel2-1');
+        //splat
+        splat = new sound("audios/splat_mix.mp3");
+        // panel21.onclick = function() {
+        //     splat.play();
+        // }
+        //layout rive canvases
+        var layout = new rive.Layout({
+            fit: rive.Fit.Contain,
+            alignment: rive.Alignment.Center,
+        });
+        /*
         
-        //     panel1-1-machine
+            panel1-1-machine
 
-        // */
-        // const p = new rive.Rive({
-        //     src: "rive/panel1-1.riv",
-        //     canvas: panel11,
-        //     artboard: "New Artboard",
-        //     autoplay: true,
-        //     stateMachines: "panel1-1-machine",
-        //     layout: layout,
-        // });
-        // /*
-        
-        //     panel1-4-machine
-        
-        // */
-        // const w = new rive.Rive({
-        //     src: "rive/panel1-2.riv",
-        //     canvas: panel14,
-        //     artboard: "New Artboard",
-        //     autoplay: true,
-        //     stateMachines: "panel1-2-machine",
-        //     layout: layout,
-        // });
+        */
+        const p = new rive.Rive({
+            src: "rive/panel2-1.riv",
+            canvas: panel21,
+            artboard: "a1",
+            autoplay: true,
+            stateMachines: "panel2-1-machine",
+            layout: layout,
+            onLoad: () => {
+                const inputs = p.stateMachineInputs("panel2-1-machine")
+                const run = inputs.find(i=> i.name === 'run')
+                const stop = inputs.find(i=> i.name === 'stop')
+                panel21.addEventListener('click', function(e){
+                    run.fire();
+                    splat.play();
+                })
+                panel21.addEventListener('mouseout', function(e){
+                    stop.fire();
+                })
+            },
+        });
+
     </script>
 </html>

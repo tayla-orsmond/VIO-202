@@ -74,7 +74,7 @@ body{
 	transition: all 1s 0.8s;
 }
 .hover{
-    background-color: #d283b7;
+    /* background-color: #d283b7; */
     z-index: 100;
 }
 #hover1{
@@ -86,7 +86,7 @@ body{
 }
 #hover2{
     width: 200px;
-    height: 100px;
+    height: 90px;
     position: absolute;
     right: 400px;
     bottom: 15px;
