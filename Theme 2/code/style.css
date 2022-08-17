@@ -1,0 +1,316 @@
+/*Tayla Orsmond u21467456*/
+/* Fonts */
+@font-face {
+    font-family: main;
+    src: url("ZenKurenaido-Regular.ttf") format("truetype");
+}
+/* Vars */
+.moose{
+    width: 100px;
+    height: 100px;
+    display: fixed;
+    right: 100px;
+    animation: pulse 1.5s ease infinite;
+}
+@keyframes pulse {
+    0% { opacity: 1;}
+    50% { opacity: 0.4;}
+    100%{ opacity: 1;}
+}
+*{
+    margin: 0;
+    padding: 0;
+}
+.on{
+    background-color: #131921;
+}
+
+/* Scroll */
+::-webkit-scrollbar {
+    width: 20px;
+}
+
+::-webkit-scrollbar-track {
+    background-color: #131921;
+    border-radius: 5px;
+}
+
+::-webkit-scrollbar-thumb {
+    background: #704560;
+    border-radius: 10px;
+}
+/* Body */
+body{
+    width: 100vw;
+    height: 100vh;
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+    overflow: hidden;
+    background-color: #010101;
+    color: white;
+    font-family: main, 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-size: 20px;
+}
+h2{
+    font-size: 200%;
+    z-index: 1000;
+}
+/* Header */
+header{
+    display: flex;
+    justify-content:space-around;
+    align-items: center;
+    padding: 10px;
+    margin-bottom: 30px;
+    box-sizing: border-box;
+}
+/* Logo/Title */
+#logo{
+    width: 600px;
+}
+/* Author (ghosts + icon) */
+#icon{
+    width: 200px;
+}
+#icon{
+    position: fixed;
+    top: 10px;
+    right: 15px;
+    z-index: 9999;
+    transition: filter 0.5s;
+}
+.ghost{
+    position: fixed;
+    top: -200px;
+    right: 15px;
+    z-index: 1;
+    transition: top 0.5s;
+}
+#icon:hover{
+    filter: hue-rotate(20deg) brightness(120%);
+}
+#icon:hover ~ .ghost1{
+    top: 200px;
+    right: 250px;
+    animation: buzz 2s ease-in-out 1s infinite;
+}
+#icon:hover ~ .bub1{
+    top: 260px;
+    right: 50px;
+    width: 220px;
+}
+#icon:hover ~ .ghost3{
+    top: 370px;
+    right: 50px;
+    animation: buzz 1s ease-in-out 1s infinite;
+}
+#icon:hover ~ .bub3{
+    top: 430px;
+    right: 130px;
+    width: 220px;
+}
+#icon:hover ~ .ghost2{
+    top: 550px;
+    right: 250px;
+    animation: buzz 1.5s ease-in-out 1s infinite;
+}
+#icon:hover ~ .bub2{
+    top: 610px;
+    right: 50px;
+    width: 220px;
+}
+@keyframes buzz {
+    0% {
+        transform: translateY(0px);
+    }
+    25%{
+        transform: translateY(-25px);
+    }
+    50%{
+        transform: translateY(25px);
+    }
+    100%{
+        transform: translateY(0px);
+    }
+}
+/* Container */
+.container img{
+    width: 100px;
+}
+.container{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+.cont{
+    margin-top: 250px;
+    box-sizing: border-box;
+}
+.container div{
+    margin: 10px;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+}
+.container p,
+.container h2{
+    flex-basis: 100%;
+    text-align: center;
+}
+/* Start */
+#startContainer{
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    margin: 0 auto;
+    margin-bottom: 300px;
+    padding: 40px;
+    box-sizing: border-box;
+}
+/* Parallax */
+#parallax{
+    width: 100vw;
+    height: 100vh;
+}
+.parallaxContainer{
+    width: 100%;
+    object-fit: cover;
+}
+#buildingContainer{
+    z-index: 99;
+}
+#bigbuildingContainer{
+    z-index: 100;
+    display: flex;
+    justify-content: space-between;
+}
+#bigbuildingContainer img{
+    width: 35%;
+}
+#bigbuildingContainer img:nth-child(1){
+    left: 0;
+}
+#bigbuildingContainer img:nth-child(2){
+    right: 0;
+}
+/* Bio container */
+#bioContainer{
+    justify-content: flex-start;
+}
+#bioContainer span,
+#bioContainer canvas{
+    position: relative;
+    z-index: 999;
+}
+/* Span */
+span{
+    background-color: #704560;
+    text-align: center;
+    padding: 10px;
+    color: black;
+    box-shadow: none;
+    border: 2px solid #131921;
+    border-radius: 4px;
+    transition: all 0.5s;
+}
+span:hover{
+    cursor: pointer;
+    background-color: #d283b7;
+    box-shadow: inset 2px 2px #794466;
+}
+span img{
+    height: 150px;
+}
+/* Icons */
+.icon{
+    margin: 10px 0;
+    padding: 5px;
+    border: 10px solid #704560;
+    background-color: #704560;
+    border-radius: 60%;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    overflow: hidden;
+    width: 150px;
+    transition: width 0.8s;
+}
+.icon img{
+    height: 100px;
+}
+.icon p{
+    flex-basis: 50%;
+    display: none;
+}
+.icon:hover{
+    width: 400px;
+    border-radius: 15px;
+    overflow: visible;
+}
+.icon:hover p{
+    flex-basis: 50%;
+
+    display: inline;
+    padding: 10px;
+    box-sizing: border-box;
+}
+#L,
+#R{ 
+    position: absolute;
+    flex-direction: column;
+    margin-bottom: 400px;
+    z-index: 10000;
+}
+#L{
+    right: 65%;
+}
+#R{
+    left: 65%;
+}
+
+/*
+
+    slider
+
+*/
+.slider {
+    -webkit-appearance: none;
+    direction: rtl;
+    margin-right: 250px;
+    width: 500px;
+    height: 15px;
+    border-radius: 5px;  
+    background: #9e94a2;
+    outline: none;
+    opacity: 0.7;
+    -webkit-transition: .2s;
+    transition: opacity .2s;
+}
+
+.slider::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 25px;
+    height: 25px;
+    border-radius: 50%; 
+    background: #704560;
+    cursor: pointer;
+}
+
+.slider::-moz-range-thumb {
+    width: 25px;
+    height: 25px;
+    border-radius: 50%;
+    background: #704560;
+    cursor: pointer;
+}
+#statContainer{
+    background: url("img/buildings.svg") fixed center no-repeat;
+}

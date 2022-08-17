@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+    <!--Tayla Orsmond u21467456-->
+    <head>
+        <title>VIO Motion Comic</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta name="author" content="Tayla Orsmond">
+        <link rel="stylesheet" href="style.css">
+    </head>
+    <body>
+        <div class="container teaser lazyload">
+            <img class="lazyload" id="logo" data-src="img/logo.svg" alt="Afterlife Logo"/>
+        </div>
+        <div class="container teaser lazyload">
+            <div class="hover" id="hover1"></div>
+            <iframe class="lazyload" style="border: none" width="1100" height="540" src="https://rive.app/s/iLD027-o4U2XJg7uVyII9w/embed" allowfullscreen></iframe>
+        </div> 
+        <div class="container teaser lazyload">
+            <img class="lazyload cont-img" data-src="panels/panel1/panel1-3.png" width="500" alt="Panel1-2"/>
+            <img class="lazyload cont-img" data-src="panels/panel1/panel1-2.png" width="800" alt="Panel1-3"/>
+        </div>
+        <div class="container teaser lazyload">
+            <div class="hover" id="hover2"></div>
+            <iframe  class="lazyload" style="border: none" width="1100" height="300" src="https://rive.app/s/aNuFIXOE0E6rvLlEhpCfww/embed" allowfullscreen></iframe>
+        </div>
+        <div class="container teaser lazyload">
+            <iframe id="panel2-1" class="lazyload"  style="border: none" width="1100" height="300" src="https://rive.app/s/FWwiSB4TpECkFQWJfYW_Iw/embed" allowfullscreen></iframe>
+        </div>
+        <div class="container teaser lazyload">
+            <iframe id="panel2-2" class="lazyload" style="border: none" width="1100" height="1195" src="https://rive.app/s/gkh7splzQ0K-KXMRhJAfig/embed" allowfullscreen></iframe>
+        </div>
+        <div class="container teaser lazyload">
+            <img class="lazyload" data-src="panels/panel2,3/panel2-3.png" width="300" alt="Panel2-3"/>
+            <img class="lazyload" data-src="panels/panel2,3/panel2-4.png" width="300" alt="Panel2-4"/>
+            <img class="lazyload" data-src="panels/panel2,3/panel2-5.png" width="300" alt="Panel2-5"/>
+        </div>
+        <div class="container teaser lazyload">
+            <div class="hover" id="hover3"></div>
+            <iframe id="panel3" class="lazyload" style="border: none" width="1150" height="1594" src="https://rive.app/s/HK-6rfoKRUm1aRLJ8qlAiw/embed" allowfullscreen></iframe>
+        </div>
+        
+    </body>
+    <script src="https://unpkg.com/@rive-app/canvas@1.0.47"></script>
+     <script src="lazysizes.min.js" async=""></script>
+    <script>
+        //canvases and divs
+        const hover1 = document.getElementById('hover1');
+        const hover2 = document.getElementById('hover2');
+        const hover3 = document.getElementById('hover3');
+        const panel21 = document.getElementById('panel2-1');
+        const panel3 = document.getElementById('panel3');
+
+        //SOUND
+        function sound(src) {
+            this.sound = document.createElement("audio");
+            this.sound.src = src;
+            this.sound.style.display = "none";
+            //this.sound.setAttribute("loop", "true");
+            this.sound.setAttribute("preload", "auto");
+            this.sound.setAttribute("controls", "none");
+            document.body.appendChild(this.sound);
+            this.play = function(){
+                this.sound.play();
+            }
+            this.stop = function(){
+                this.sound.pause();
+            }
+        }
+        function sound2(src) {
+            this.sound2 = document.createElement("audio");
+            this.sound2.src = src;
+            this.sound2.style.display = "none";
+            this.sound2.setAttribute("preload", "auto");
+            this.sound2.setAttribute("controls", "none");
+            document.body.appendChild(this.sound2);
+            this.play = function(){
+                this.sound2.play();
+            }
+            this.stop = function(){
+                this.sound2.pause();
+            }
+        }
+        dialogue1 = new sound("audios/cmonkeepup.m4a");
+        
+        hover1.addEventListener("mouseover", function(){
+            dialogue1.play();
+        });
+        // //canvases
+        // const panel11 = document.getElementById('panel11');
+        // const panel14 = document.getElementById('panel14');
+
+        // //layout rive canvases
+        // var layout = new rive.Layout({
+        //     fit: rive.Fit.Contain,
+        //     alignment: rive.Alignment.Center,
+        // });
+        // /*
+        
+        //     panel1-1-machine
+
+        // */
+        // const p = new rive.Rive({
+        //     src: "rive/panel1-1.riv",
+        //     canvas: panel11,
+        //     artboard: "New Artboard",
+        //     autoplay: true,
+        //     stateMachines: "panel1-1-machine",
+        //     layout: layout,
+        // });
+        // /*
+        
+        //     panel1-4-machine
+        
+        // */
+        // const w = new rive.Rive({
+        //     src: "rive/panel1-2.riv",
+        //     canvas: panel14,
+        //     artboard: "New Artboard",
+        //     autoplay: true,
+        //     stateMachines: "panel1-2-machine",
+        //     layout: layout,
+        // });
+    </script>
+</html>

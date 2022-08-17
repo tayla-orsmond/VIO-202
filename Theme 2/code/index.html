@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="en">
+    <!--Tayla Orsmond u21467456-->
+    <head>
+        <title>VIO Infographic</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta name="author" content="Tayla Orsmond">
+        <link rel="stylesheet" href="style.css">
+    </head>
+    <body>
+        <div id="startContainer">
+            <canvas id="world" width="700" height="700"></canvas>
+            <canvas id="plug" width="500" height="700"></canvas>
+            <img id="moose" class = "moose" src="img/mouse.svg"/>
+        </div>
+        <div id="parallax">
+            <div id="buildingContainer" class="parallaxContainer">
+                <img src="img/buildings.svg" alt="Afterlife buildings"/>
+            </div>
+            <div id="bigbuildingContainer" class="parallaxContainer">
+                <img src="img/building-right.svg" alt="Afterlife big buildings"/>
+                <img src="img/building-left.svg" alt="Afterlife big buildings"/>
+            </div>
+        </div> 
+        <header class="container">
+            <a href="index.html"><img id="logo" src="img/logo.svg" alt="Afterlife Logo"></a>
+            <img id="icon" src="img/icon.svg" alt="Author Icon"/>
+            <img class="ghost ghost1" src="img/ghost.svg" alt="ghost1"/>
+            <img class="ghost bub1" src="img/bubble1.svg"/>
+            <img class="ghost ghost3" src="img/ghost.svg" alt="ghost3"/>
+            <img class="ghost bub3" src="img/bubble3.svg"/>
+            <img class="ghost ghost2" src="img/ghost.svg" alt="ghost2"/>
+            <img class="ghost bub2" src="img/bubble2.svg"/>
+        </header>
+        <div id="bioContainer" class="container">
+            <h2>About the MC</h2>
+            <div id="L">
+                <div class="icon"><p>Cecilia</p><img src="img/name.svg"/></div>
+                <div class="icon"><p>Reaper</p><img src="img/scythe.svg"/></div>
+            </div>
+            <div id="R">
+                <div class="icon"><img src="img/strength.svg"/><p>Hard working, quick-thinking, stealthy and smart</p></div>
+                <div class="icon"><img src="img/weakness.svg"/><p>Easily irritated, overworked and has unhealthy coping mechanisms</p></div>
+            </div>
+            <canvas id="bio" width="600" height="550"></canvas>
+            <div>
+                <span id="gh"><img src="img/ghost-icon.svg"/></span>
+                <span id="vis"><img src="img/invisi.svg"/></span>
+                <span id="bt"><img src="img/both.svg"/></span>
+                <span id="rs"><img src="img/reset.svg"/></span>
+                <h2>Abilities</h2>
+                <p id="ability-name"></p>
+            </div>
+        </div> 
+        <div id="statContainer" class="container cont">
+            <h2>Check the stats</h2>
+            <input type="range" min="0" max="100" value="0" class="slider" id="sliderBar">
+            <canvas id="stat" width="950" height="700"></canvas>
+        </div>
+        <div id="charsContainer" class="container cont">
+            <h2>Other Characters</h2>
+            <div>
+                <canvas id="chars" width="1200" height="800"></canvas>
+            </div>
+        </div>
+    </body>
+    <script src="https://unpkg.com/@rive-app/canvas@1.0.47"></script>
+    <script>
+        //globals
+        var pluggedIn = false;
+        var zoom = 0.5;
+        var position = 60;
+        var trans = true;
+        var body = document.body;
+        var bar = document.getElementById("sliderBar");
+        var icon = document.getElementById("icon");
+        var moose = document.getElementById("moose");
+        //buttons
+        const ghostBtn = document.getElementById('gh');
+        const invisiBtn = document.getElementById('vis');
+        const bothBtn = document.getElementById('bt');
+        const resetBtn = document.getElementById('rs');
+        //containers
+        const parallax = document.getElementById('parallax');
+
+        const startContainer = document.getElementById('startContainer').scrollIntoView({behavior: 'smooth'});
+        const bioContainer = document.getElementById('bioContainer');
+        
+        const buildings = document.getElementById('buildingContainer');
+        const bigbuildings = document.getElementById('bigbuildingContainer');
+        //canvases
+        const plug = document.getElementById('plug');
+        const world = document.getElementById('world');
+        const bio = document.getElementById('bio');
+        const stat = document.getElementById('stat');
+        const chars = document.getElementById('chars');
+        //layout rive canvases
+        var layout = new rive.Layout({
+            fit: rive.Fit.Contain,
+            alignment: rive.Alignment.Center,
+        });
+        icon.style.visibility = 'hidden';
+        moose.style.visibility = 'hidden';
+        /*
+        
+            parallax
+        
+        */
+        parallax.style.top = window.innerHeight + 200 + "px";
+        bioContainer.style.marginTop = window.innerHeight -500 + "px";
+        //add to the wheel event listener
+        /*
+            
+            scroll event
+        
+        */
+        window.addEventListener("wheel", function(e){
+            var scrolled = window.pageYOffset;
+            var rate = scrolled * 0.2;
+            var bigrate = scrolled * 0.7;
+            if(pluggedIn && e.deltaY < 0 && world.getBoundingClientRect().width <= window.innerWidth -100 && trans){
+                //
+                world.style.position = "absolute";
+                world.style.transform = `scale(${(zoom += 0.2)})`;
+            }
+            else if(pluggedIn && e.deltaY > 0 && world.getBoundingClientRect().width >= 600  && trans){
+                world.style.transform = `scale(${(zoom -= 0.2)})`;
+            }
+            if(world.getBoundingClientRect().width > window.innerWidth -200){
+                body.style.overflow = "visible";
+                body.style.overflowX = "hidden";
+                icon.style.visibility = "visible";
+                world.style.padding = "100px";
+                trans = false;
+                moose.style.visibility = 'hidden';
+
+                parallax.style.position = "absolute";
+
+                buildings.style.transform = `translate3d(0, -${rate}px, 0px)`;
+                bigbuildings.style.transform = `translate3d(0, -${bigrate}px, 0px)`;
+            }
+        });
+        /*
+        
+            plug-machine
+
+        */
+        const p = new rive.Rive({
+            src: "rive/plug-start.riv",
+            canvas: plug,
+            autoplay: true,
+            stateMachines: "plug-machine",
+            layout: layout,
+            onLoad: () => {
+                const inputs = p.stateMachineInputs("plug-machine")
+                const mouseOver = inputs.find(i=> i.name === 'mouse-over')
+                const mouseOut = inputs.find(i=> i.name === 'mouse-out')
+                const click = inputs.find(i=> i.name === 'click')
+                plug.addEventListener('mouseover', function(e){
+                    mouseOver.fire();
+                })
+                plug.addEventListener('mouseout', function(e){
+                    mouseOut.fire();
+                })
+                plug.addEventListener('click', function(e){
+                    click.fire();
+                })
+            },
+            onStateChange: (e) => {
+                const names = e.data;
+                names.forEach((name) => {
+                    if (name === 'idle-on') {
+                        pluggedIn = true;
+                        body.classList.add("on");
+                        moose.style.visibility = 'visible';
+                    } 
+                    else{
+                        pluggedIn = false;
+                        body.classList.remove("on");
+                        moose.style.visibility = 'hidden';
+                    }
+                });
+            } 
+        });
+        /*
+        
+            world-machine
+        
+        */
+        const w = new rive.Rive({
+            src: "rive/world-scene.riv",
+            canvas: world,
+            autoplay: true,
+            stateMachines: "world-machine",
+            layout: layout,
+            onLoad: () => {
+                const inputs = w.stateMachineInputs("world-machine")
+                const isOn = inputs.find(i=> i.name === 'isOn')
+                window.setInterval(() => {
+                    if(pluggedIn){
+                        isOn.value = true;
+                    }
+                    else{
+                        isOn.value = false;
+                        
+                    }
+                }, 500);
+            },
+        });
+        /*
+        
+            bio-machine
+        
+        */
+        const b = new rive.Rive({
+            src: "rive/bio-abilities-scene.riv",
+            canvas: bio,
+            autoplay: true,
+            stateMachines: "bio-machine",
+            layout: layout,
+            onLoad: () => {
+                const inputs = b.stateMachineInputs("bio-machine")
+                const invisi = inputs.find(i=> i.name === 'invisi')
+                const ghost = inputs.find(i=> i.name === 'ghost')
+                const mix = inputs.find(i=> i.name === 'mix')
+                ghostBtn.onclick = _ => {
+                    ghost.value = true;
+                    invisi.value = false;
+                }
+                invisiBtn.onclick = _ => {
+                    ghost.value = false;
+                    invisi.value = true;
+                }
+                bothBtn.onclick = _ => {
+                    ghost.value = true;
+                    invisi.value = true;
+                }
+                resetBtn.onclick = _ => {
+                    ghost.value = false;
+                    invisi.value = false;
+                }
+            },
+            onStateChange: (e) => {
+                const names = e.data;
+                names.forEach((name) => {
+                    if (name === 'ghost') {
+                        document.getElementById('ability-name').innerHTML = "Communicate with your ghost gang";
+                    } 
+                    else if(name === 'invisi'){
+                        document.getElementById('ability-name').innerHTML = "Turn invisible"; 
+                    }
+                    else if(name === 'unknown'){
+                        document.getElementById('ability-name').innerHTML = "Do both!";
+                    }
+                    else{
+                        document.getElementById('ability-name').innerHTML = "";
+                    }
+                });
+                
+            }
+        });
+        /*
+        
+            stat-machine
+        
+        */
+        const s = new rive.Rive({
+            src: "rive/stats-scene.riv",
+            canvas: stat,
+            autoplay: true,
+            stateMachines: "stat-machine",
+            layout: layout,
+            onLoad: () => {
+                const inputs = s.stateMachineInputs("stat-machine")
+                const stat = inputs.find(i=> i.name === 'stat')
+                bar.addEventListener("input", function () {
+                    stat.value = bar.value;
+                })
+            },
+        });
+        /*
+        
+            chars-machine
+        
+        */
+        const c = new rive.Rive({
+            src: "rive/chars-scene.riv",
+            canvas: chars,
+            autoplay: true,
+            stateMachines: "chars-machine",
+            layout: layout,
+            onLoad: () => {
+                const inputs = c.stateMachineInputs("chars-machine")
+                const next = inputs.find(i=> i.name === 'next')
+                chars.onclick = _ => {
+                    next.fire();
+                }                
+            },
+        });
+    </script>
+</html>

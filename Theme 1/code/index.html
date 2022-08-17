@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+    <!--Tayla Orsmond u21467456-->
+    <head>
+        <title></title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta name="author" content="Tayla Orsmond">
+        <link rel="stylesheet" href="style.css">
+    </head>
+    <body>
+        <header>
+            <a href="index.html"><img id="logo" src="logo.svg" alt="Afterlife Logo"></a>
+            <div>
+                <button onclick="location.reload()"><img src="undo-arrow.png" alt="undo-arrow"></button>
+                <button onclick="playMusic()"><img src="vol-high.svg" alt="Sound on icon"></button>
+                <button onclick="pauseMusic()"><img src="vol-mute.svg" alt="Sound off icon"></button>
+            </div>
+            <nav>
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="index.html">Read Now</a></li>
+                    <li><a href="index.html">Contact</a></li>
+                </ul>
+            </nav>
+            
+        </header>
+        <div class="container">
+            <canvas id="canvas" width="1204" height="700"></canvas>
+        </div>
+        <p id="read"><a href="index.html">Join in on the adventure</a></p>
+    </body>
+    <script src="https://unpkg.com/@rive-app/webgl"></script>
+    <script>
+        /* SOUND RIGHTS:
+        Deadly Roulette - Kevin MacLeod (incompetech.com)
+        Licensed under Creative Commons: By Attribution 3.0
+        http://creativecommons.org/licenses/by/3.0/
+
+        Car Crash sound effect - Free Sound Effects
+        https://www.youtube.com/watch?v=jF6jP5n07gY
+
+        IMAGE RIGHTS:
+        Volume icons (muted and unmuted) - Font Awesome
+        Part of the free Font Awesome open source package and is 
+        available under the CC BY 4.0 license 
+        https://fontawesome.com/license/free
+        Font Awesome Pro 6.1.1 by @fontawesome - https://fontawesome.com 
+        License - https://fontawesome.com/license (Commercial License) 
+        Copyright 2022 Fonticons, Inc.
+
+        Refresh icon - Flat Icon
+        Refresh icons created by Freepik - Flaticon
+        https://www.flaticon.com/free-icons/refresh
+        */
+        const container = document.getElementById('container');
+        const readButton = document.getElementById('read');
+        readButton.setAttribute("display", "none");
+        const hoverBox = document.getElementById('hoverBox');
+        const r = new rive.Rive({
+            src: "vio_promo.riv",
+            canvas: document.getElementById("canvas"),
+            autoplay: true,
+            stateMachines: "State Machine 1",
+            fit: rive.Fit.cover,
+            onLoad: () => {
+                const inputs = r.stateMachineInputs("State Machine 1")
+                const scrollT = inputs.find(i=> i.name === 'scrollT')
+                const keypress = inputs.find(i=> i.name === 'keypress')
+                const clickOn = inputs.find(i=> i.name === "clickOn")
+                const mouseOver = inputs.find(i=> i.name === "mouseOver")
+                const mouseOut = inputs.find(i=> i.name === "mouseOut")
+                const key = inputs.find(i=> i.name === "key")
+                canvas.onwheel = (e) =>{
+                    scrollT.fire();
+                }
+                window.addEventListener('keydown', function(e){
+                    console.log(e);
+                    if(e.keyCode == 39){
+                        keypress.fire();
+                    }
+                })
+                canvas.addEventListener('mouseover', function(e){
+                    mouseOver.fire();
+                })
+                canvas.addEventListener('click', function(e){
+                    clickOn.fire();
+                })
+            },
+            onStateChange: (e) => {
+                const names = e.data;
+                names.forEach((name) => {
+                    if (name === 'trip') {
+                        crash.play();
+                    }
+                });
+            } 
+        });
+        r.on(rive.EventType.Play, (event) => {
+            const names = event.data;
+            names.forEach((name) => {
+                if (name === 'trip') {
+                    crash.play();
+                }
+            });
+        });
+        //SOUND
+        function sound(src) {
+            this.sound = document.createElement("audio");
+            this.sound.src = src;
+            this.sound.style.display = "none";
+            this.sound.setAttribute("loop", "true");
+            this.sound.setAttribute("preload", "auto");
+            this.sound.setAttribute("controls", "none");
+            document.body.appendChild(this.sound);
+            this.play = function(){
+                this.sound.play();
+            }
+            this.stop = function(){
+                this.sound.pause();
+            }
+        }
+        function sound2(src) {
+            this.sound2 = document.createElement("audio");
+            this.sound2.src = src;
+            this.sound2.style.display = "none";
+            this.sound2.setAttribute("preload", "auto");
+            this.sound2.setAttribute("controls", "none");
+            document.body.appendChild(this.sound2);
+            this.play = function(){
+                this.sound2.play();
+            }
+            this.stop = function(){
+                this.sound2.pause();
+            }
+        }
+        bgmusic = new sound("deadlyRoulette.m4a");
+        crash = new sound2("crash3.wav");
+        bgmusic.play();
+        function playMusic(){
+
+            bgmusic.play();
+        }
+        function pauseMusic(){
+            bgmusic.stop();
+        }
+    </script>
+</html>
