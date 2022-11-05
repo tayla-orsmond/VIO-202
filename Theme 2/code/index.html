@@ -9,6 +9,10 @@
         <link rel="stylesheet" href="style.css">
     </head>
     <body>
+        <div id='back'>
+            <a href="https://vio-portfolio.netlify.app/" class='back-btn'>&LeftArrow; Go back</a>
+            <img src="img/icon-cat.svg" alt="Icon"/>
+        </div>
         <div id="startContainer">
             <canvas id="world" width="700" height="700"></canvas>
             <canvas id="plug" width="500" height="700"></canvas>
@@ -68,15 +72,16 @@
     <script src="https://unpkg.com/@rive-app/canvas@1.0.47"></script>
     <script>
         //globals
-        var pluggedIn = false;
-        var zoom = 0.5;
-        var position = 60;
-        var trans = true;
-        var body = document.body;
-        var bar = document.getElementById("sliderBar");
-        var icon = document.getElementById("icon");
-        var moose = document.getElementById("moose");
+        let pluggedIn = false;
+        let zoom = 0.5;
+        let position = 60;
+        let trans = true;
+        let body = document.body;
+        let bar = document.getElementById("sliderBar");
+        let icon = document.getElementById("icon");
+        let moose = document.getElementById("moose");
         //buttons
+        const back = document.getElementById('back');
         const ghostBtn = document.getElementById('gh');
         const invisiBtn = document.getElementById('vis');
         const bothBtn = document.getElementById('bt');
@@ -95,8 +100,12 @@
         const bio = document.getElementById('bio');
         const stat = document.getElementById('stat');
         const chars = document.getElementById('chars');
+        //set timeout for back button
+        setTimeout(() => {
+            back.style.opacity = 1;
+        }, 2000);
         //layout rive canvases
-        var layout = new rive.Layout({
+        let layout = new rive.Layout({
             fit: rive.Fit.Contain,
             alignment: rive.Alignment.Center,
         });
@@ -116,9 +125,9 @@
         
         */
         window.addEventListener("wheel", function(e){
-            var scrolled = window.pageYOffset;
-            var rate = scrolled * 0.2;
-            var bigrate = scrolled * 0.7;
+            let scrolled = window.pageYOffset;
+            let rate = scrolled * 0.2;
+            let bigrate = scrolled * 0.7;
             if(pluggedIn && e.deltaY < 0 && world.getBoundingClientRect().width <= window.innerWidth -100 && trans){
                 //
                 world.style.position = "absolute";
