@@ -13,9 +13,12 @@
     animation: pulse 1.5s ease infinite;
 }
 @keyframes pulse {
-    0% { opacity: 1;}
-    50% { opacity: 0.4;}
-    100%{ opacity: 1;}
+    0% { opacity: 1;
+    transform: translateY(-10px);}
+    50% { opacity: 0.4;
+    transform: translateY(10px);}
+    100%{ opacity: 1;
+    transform: translateY(-10px);}
 }
 *{
     margin: 0;

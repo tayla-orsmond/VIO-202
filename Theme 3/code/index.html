@@ -9,6 +9,10 @@
         <link rel="stylesheet" href="style.css">
     </head>
     <body>
+        <div id='back'>
+            <a href="https://vio-portfolio.netlify.app/" class='back-btn'>&LeftArrow; Go back</a>
+            <img src="img/icon-cat.svg" alt="Icon"/>
+        </div>
         <div class="bg">
             <div class="container teaser lazyload">
                 <img class="lazyload" id="logo" data-src="img/logo.svg" alt="Afterlife Logo"/>
@@ -110,6 +114,12 @@
         const panel71 = document.getElementById('panel7-1');
         const schw = document.getElementById('schwick');
 
+        const back = document.getElementById('back');
+
+        //set timeout for back button
+        setTimeout(() => {
+            back.style.opacity = 1;
+        }, 3000);
         //SOUND
         function sound(src) {
             this.sound = document.createElement("audio");

@@ -161,3 +161,37 @@ span img{
         transform: translateX(0);
     }
 }
+
+/* Back button */
+#back{
+    position: fixed;
+    z-index: 999;
+    top: 10px;
+    left: 10px;
+    padding: 10px;
+    width: 100%;
+    display: flex;
+    justify-content: flex-start;
+    align-items: flex-start;
+    opacity: 0;
+    transition: all 0.8s ease;
+    font-size: 100%;
+}
+#back img {
+    max-width: 4rem;
+    display: inline;
+}
+#back .back-btn {
+    display: inline-block;
+    padding: 0.5rem;
+    border-radius: 1rem 1rem 0 1rem;
+    background-color: #704560;
+    color: #131921;
+    text-decoration: none;
+    transition: all 0.5s ease;
+}
+
+#back .back-btn:hover {
+    background-color: #d283b7;
+    color: #010101;
+}
