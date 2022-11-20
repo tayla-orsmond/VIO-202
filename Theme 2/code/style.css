@@ -243,6 +243,7 @@ span img{
     flex-wrap: nowrap;
     overflow: hidden;
     width: 150px;
+    height: 150px;
     transition: width 0.8s;
 }
 .icon img{
@@ -254,6 +255,7 @@ span img{
 }
 .icon:hover{
     width: 400px;
+    height: auto;
     border-radius: 15px;
     overflow: visible;
 }
